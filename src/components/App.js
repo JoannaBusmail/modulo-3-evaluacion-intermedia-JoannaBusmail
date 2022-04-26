@@ -39,29 +39,36 @@ function App() {
     ev.preventDefault();
     setSearchQuote(ev.target.value);
   };
-
+  //Trabajando en este Hnadle.....
   const handleSelectOptions = (ev) => {
     const selectValue = ev.target.value;
     const selectChanged = ev.target.name;
     setSearchCharacter({ ...searchCharacter, [selectChanged]: selectValue });
   };
   const renderHtml = () => {
-    //MAPEO: Me permite obtener por un lado la frase y por otro el personaje de cada uno de los objetos de mi array. De esta manera pinto un unico LI cambiando unicamente los datos variables: quote y character.
-    //recordar que debe coincidi el nombre de la API
-    return quotesData
-      .filter((quoteFilter) => {
-        return quoteFilter.quote
-          .toLocaleLowerCase()
-          .includes(searchQuote.toLocaleLowerCase());
-      })
-      .map((dataToRender, index) => {
-        return (
-          <li key={index}>
-            <p>{dataToRender.quote}</p>
-            <p>{dataToRender.character}</p>
-          </li>
-        );
-      });
+    return (
+      quotesData
+        //filtro por frases buscadas
+        .filter((quoteFilter) => {
+          return quoteFilter.quote
+            .toLocaleLowerCase()
+            .includes(searchQuote.toLocaleLowerCase());
+        })
+        // trabajando en filtrar por select....
+        .filter((characterFilter) => {
+          return characterFilter.character.includes(searchCharacter);
+        })
+        //MAPEO: Me permite obtener por un lado la frase y por otro el personaje de cada uno de los objetos de mi array. De esta manera pinto un unico LI cambiando unicamente los datos variables: quote y character.
+        //recordar que debe coincidi el nombre de la API
+        .map((dataToRender, index) => {
+          return (
+            <li key={index}>
+              <p>{dataToRender.quote}</p>
+              <p>{dataToRender.character}</p>
+            </li>
+          );
+        })
+    );
   };
   return (
     <div>
