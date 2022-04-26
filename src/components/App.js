@@ -13,6 +13,11 @@ function App() {
     setAddData({ ...addData, [ev.target.id]: ev.target.value });
   };
 
+  const handleClickAddBtn = (ev) => {
+    ev.preventDefault();
+    setquotesData([...quotesData, addData]);
+  };
+
   const renderHtml = () => {
     return quotesData.map((dataToRender, index) => {
       return (
@@ -47,7 +52,7 @@ function App() {
           value={addData.character}
           onChange={handleInputAddData}
         ></input>
-        <button>Añadir nueva frase</button>
+        <button onClick={handleClickAddBtn}>Añadir nueva frase</button>
       </form>
     </div>
   );
