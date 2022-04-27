@@ -1,6 +1,7 @@
 import '../styles/index.scss';
-import { useState } from 'react';
-import friendsQuotesData from '../service/friends-quotes.json';
+import { useEffect, useState } from 'react';
+//import friendsQuotesData from '../service/friends-quotes.json';
+import callToApi from '../service/api';
 
 function App() {
   //variables de estado para:
@@ -8,13 +9,19 @@ function App() {
   // 2. Mis inputs para añadir la nueva info. este se compone de un objeto. Asi puedo manejar un objeto con mas de 1 input
   // 3. Mi input para filtrar por frase
   // 4. Mis select para filtrar por personaje
-  const [quotesData, setquotesData] = useState(friendsQuotesData);
+  const [quotesData, setquotesData] = useState({});
   const [searchQuote, setSearchQuote] = useState('');
   const [searchCharacter, setSearchCharacter] = useState('');
   const [addData, setAddData] = useState({
     quote: '',
     character: '',
   });
+
+  useEffect(() => {
+    callToApi().then((data) => {
+      setquotesData(data);
+    });
+  }, []);
 
   const handleInputAddData = (ev) => {
     //Guardo la nueva data en variable de estado.
