@@ -11,8 +11,10 @@ function App() {
         //Guardo quote data la informacion que viene de la API
         setquotesData(dataFromApi);
       }),
+
     []
   );
+
   //variables de estado para:
   // 1. mis listas iniciales que cambiarán a medida que vaya incluyendo frases nuevas o si quiero filtrarlas
   // 2. Mis inputs para añadir la nueva info. este se compone de un objeto. Asi puedo manejar un objeto con mas de 1 input
@@ -46,14 +48,12 @@ function App() {
 
   const handleInputSearchData = (ev) => {
     //Guardo en mi variable de estado de buscar por frase el valor del input.Como este cambia REACT se encarga de pintarlo cuando mapea. Tenmos pintado el array original y pinta el cambio.
-    ev.preventDefault();
+
     setSearchQuote(ev.target.value);
   };
   //Trabajando en este Hnadle.....
   const handleSelectOptions = (ev) => {
-    const selectValue = ev.target.value;
-    const selectChanged = ev.target.name;
-    setSearchCharacter({ ...searchCharacter, [selectChanged]: selectValue });
+    setSearchCharacter(ev.target.value);
   };
   const renderHtml = () => {
     return (
@@ -82,7 +82,10 @@ function App() {
   };
   return (
     <div>
-      <h1>Frases de Friends</h1>
+      <header>
+        <h1>Frases de Friends</h1>
+      </header>
+
       <form>
         <label htmlFor='quoteFilter'>Filtrar por frase</label>
         <input
@@ -94,30 +97,20 @@ function App() {
         ></input>
         {/*SELECTS*/}
         <label htmlFor='characterFilter'>Filtrar por personaje</label>
-        <select type='character' id='character' name='character'>
-          <option
-            name='character'
-            id='character-all'
-            value='all'
-            checked={searchCharacter.character === 'all'}
-            onChange={handleSelectOptions}
-          >
-            Todos
-          </option>
-          <option
-            name='character'
-            id='character-Ross'
-            value='Ross'
-            checked={searchCharacter.character === 'Ross'}
-            onChange={handleSelectOptions}
-          >
-            Ross
-          </option>
-          <option>Monica</option>
-          <option>Chandler</option>
-          <option>Phoebe</option>
-          <option>Joey</option>
-          <option>Rachel</option>
+        <select
+          type='character'
+          id='character'
+          name='character'
+          value={searchCharacter}
+          onChange={handleSelectOptions}
+        >
+          <option value='all'>Todos</option>
+          <option value='Ross'>Ross</option>
+          <option value='Monica'>Monica</option>
+          <option value='Chandler'>Chandler</option>
+          <option value='Phoebe'>Phoebe</option>
+          <option value='Joey'>Joey</option>
+          <option value='Rachel'>Rachel</option>
         </select>
       </form>
       {/*Llamo ala función que pinta mis LI*/}
