@@ -1,14 +1,24 @@
 import '../styles/index.scss';
-import { useState } from 'react';
-import friendsQuotesData from '../service/friends-quotes.json';
+import { useEffect, useState } from 'react';
+//import friendsQuotesData from '../service/friends-quotes.json';
+import getApi from '../service/api';
 
 function App() {
+  //use effect para recibir datos de la api
+  useEffect(
+    () =>
+      getApi().then((dataFromApi) => {
+        //Guardo quote data la informacion que viene de la API
+        setquotesData(dataFromApi);
+      }),
+    []
+  );
   //variables de estado para:
   // 1. mis listas iniciales que cambiarán a medida que vaya incluyendo frases nuevas o si quiero filtrarlas
   // 2. Mis inputs para añadir la nueva info. este se compone de un objeto. Asi puedo manejar un objeto con mas de 1 input
   // 3. Mi input para filtrar por frase
   // 4. Mis select para filtrar por personaje
-  const [quotesData, setquotesData] = useState(friendsQuotesData);
+  const [quotesData, setquotesData] = useState([]);
   const [searchQuote, setSearchQuote] = useState('');
   const [searchCharacter, setSearchCharacter] = useState('');
   const [addData, setAddData] = useState({
