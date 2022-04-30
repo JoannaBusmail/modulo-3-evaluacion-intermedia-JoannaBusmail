@@ -22,7 +22,8 @@ function App() {
   // 4. Mis select para filtrar por personaje
   const [quotesData, setquotesData] = useState([]);
   const [searchQuote, setSearchQuote] = useState('');
-  const [searchCharacter, setSearchCharacter] = useState('');
+  //Añado que el valor inicial salga por defecto todas las quotes
+  const [searchCharacter, setSearchCharacter] = useState('all');
   const [addData, setAddData] = useState({
     quote: '',
     character: '',
@@ -64,9 +65,23 @@ function App() {
             .toLocaleLowerCase()
             .includes(searchQuote.toLocaleLowerCase());
         })
-        // trabajando en filtrar por select....
+
         .filter((characterFilter) => {
-          return characterFilter.character.includes(searchCharacter);
+          // filramos por personaje, igual que filtramos por quotes. el problema es que no me aparee la opcion 'all' en la api, por tanto all no me lo filtra
+          //***return characterFilter.character.includes(searchCharacter);
+          if (searchCharacter === 'all') {
+            return true;
+          } else if (searchCharacter === characterFilter.character) {
+            return true;
+          } else {
+            return false;
+          }
+          //esta condicion no funciona...
+          /*if (searchCharacter === characterFilter.character) {
+            return characterFilter.character;
+          } else {
+            return quotesData;
+          }*/
         })
         //MAPEO: Me permite obtener por un lado la frase y por otro el personaje de cada uno de los objetos de mi array. De esta manera pinto un unico LI cambiando unicamente los datos variables: quote y character.
         //recordar que debe coincidi el nombre de la API
